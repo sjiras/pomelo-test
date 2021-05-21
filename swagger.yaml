@@ -1,0 +1,98 @@
+swagger: "2.0"
+info:
+  description: "Pomelo challenge test"
+  version: "1.0.0"
+  title: "Pomelo Test"
+  contact:
+    email: "shinnakrit@gmail.com"
+host: "localhost:3000"
+basePath: "/"
+tags:
+- name: "Format 0bject"
+  description: "Format object to Array"
+- name: "Github Search"
+  description: "Search nodejs repositories"
+schemes:
+- "http"
+paths:
+  /format:
+    post:
+      tags:
+      - "Format 0bject"
+      summary: "Format object to Array"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Pet object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Input"
+      responses:
+        "200":
+          description: "Formatted Object"
+          schema:
+            $ref: "#/definitions/Output"
+        "400":
+          description: "Payload does not exists"
+  /github:
+    get:
+      tags:
+      - "Github Search"
+      summary: "Finds Pets by status"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findPetsByStatus"
+      produces:
+      - "text/html"
+      parameters:
+      - name: "page"
+        in: "query"
+        description: "Page number"
+        required: false
+        type: "number"
+        default: 1
+      responses:
+        "200":
+          description: "successful operation"
+        "422":
+          description: "Page number exceeded"
+        "500":
+          description: "Internal server error"
+definitions:
+  Input:
+    type: "object"
+    properties:
+      level:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            id:
+              type: "number"
+            level:
+              type: "number"
+            children:
+              type: "array"
+              items:
+                type: "object"
+            parent_id:
+              type: "number"
+  Output:
+    type: "array"
+    items: 
+      type: "object"
+      properties:
+        id:
+          type: "number"
+        level:
+          type: "number"
+        children:
+          type: "array"
+          items:
+            type: "object"
+        parent_id:
+          type: "number"
