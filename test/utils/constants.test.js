@@ -22,5 +22,10 @@ describe('utils/constants', () => {
     assert.equal(constants.GITHUB_ITEMS_PER_PAGE, 100)
   })
 
+  it('Should export GITHUB_MAXIMUM_PAGE', () => {
+    assert(constants.hasOwnProperty('GITHUB_MAXIMUM_PAGE'))
+    assert.equal(constants.GITHUB_MAXIMUM_PAGE, 10)
+  })
+
 
 })

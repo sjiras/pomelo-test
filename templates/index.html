@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Github Search</title>
 </head>
 
 <style>
@@ -31,13 +31,53 @@
   h3 {
     text-align: center;
   }
+
+  div.pages {
+    margin-top: 3%;
+    text-align: center;
+  }
+
+  a.git:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+  a.git:visited {
+    color: gray;
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+  a.git:hover {
+    color: yellowgreen;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+
+  a.page {
+    padding: 4px
+  }
+
+  a.page:link {
+    color: black;
+    background-color: transparent;
+  }
+  
 </style>
 
 <body>
   <h3>Github Search (Page: {{page}})</h3>
   {{#table items}}
-  {{full_name}}
+  <a class="git" href="{{html_url}}">{{full_name}}</a>
   {{/table}}
+  <div class="pages">
+    <span>
+      {{#each pages}}
+      <a class="page" href="http://localhost:3000/github?page={{this}}">{{this}}</a>
+      {{/each}}
+    </span>
+  </div>
 </body>
 
 </html>

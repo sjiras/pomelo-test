@@ -6,7 +6,7 @@ const sinon = require('sinon')
 
 describe('routes/github.js', () => {
 
-  let github, axios, constants, request, h, query
+  let github, axios, constants, request, h, query, pages
 
   beforeEach(() => {
     axios = {
@@ -15,12 +15,14 @@ describe('routes/github.js', () => {
     constants = {
       GITHUB_SEARCH_URL: 'https://github.com/search',
       GITHUB_ITEMS_PER_PAGE: 100,
+      GITHUB_MAXIMUM_PAGE: 10,
     }
     request = {}
     h = {
       view: sinon.stub(),
     }
     query = { page: 2 }
+    pages = [...Array(constants.GITHUB_MAXIMUM_PAGE).keys()].map(i => i + 1)
     github = proxyquire('../../routes/github', {
       'axios': axios,
       '../utils/constants': constants,
@@ -56,7 +58,7 @@ describe('routes/github.js', () => {
       axios.get.resolves({ data: { items: ['item'] } })
       await github[0].handler({ query }, h)
       assert(h.view.calledOnce)
-      assert(h.view.calledWith('index', { page: query.page, items: ['item'] }))
+      assert(h.view.calledWith('index', { pages, page: query.page, items: ['item'] }))
     })
 
     it('Handler should return error html to client when APIs response error', async () => {
